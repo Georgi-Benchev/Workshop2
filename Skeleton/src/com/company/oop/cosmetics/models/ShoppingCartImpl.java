@@ -32,6 +32,7 @@ public class ShoppingCartImpl implements ShoppingCart {
     }
 
     public boolean containsProduct(Product product) {
+
         return products.contains(product);
     }
 

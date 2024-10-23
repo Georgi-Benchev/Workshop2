@@ -1,5 +1,7 @@
 package com.company.oop.cosmetics.utils;
 
+import com.company.oop.cosmetics.models.enums.GenderType;
+
 import java.util.List;
 
 public class ValidationHelpers {
@@ -17,11 +19,23 @@ public class ValidationHelpers {
         validateIntRange(minLength, maxLength, stringToValidate.length(), type);
     }
 
+    public static void validateNotNegative(Double number, String whatIsValidated) {
+        if (number < 0) {
+            throw new IllegalArgumentException(String.format("%s should be non negative.", whatIsValidated));
+        }
+    }
+    public static void validateNotNegative(Integer number, String whatIsValidated) {
+        if (number < 0) {
+            throw new IllegalArgumentException(String.format("%s should be non negative.", whatIsValidated));
+        }
+    }
+
     public static void validateArgumentsCount(List<String> list, int expectedNumberOfParameters) {
         if (list.size() < expectedNumberOfParameters || list.size() > expectedNumberOfParameters) {
             throw new IllegalArgumentException(String.format(INVALID_NUMBER_OF_ARGUMENTS,
                     expectedNumberOfParameters, list.size()));
         }
     }
+
 
 }
