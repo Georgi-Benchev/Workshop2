@@ -46,13 +46,19 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
 
     @Override
     public Product findProductByName(String productName) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+
+        for (Product product : products) {
+            if (product.getName().equalsIgnoreCase(productName)) {  // may be with equals only
+                return product;
+            }
+        }
+        throw new IllegalArgumentException(String.format(PRODUCT_DOES_NOT_EXIST, productName));
     }
 
     @Override
     public CategoryImpl findCategoryByName(String categoryName) {
         for (CategoryImpl category : getCategories()) {
-            if (category.getName().equalsIgnoreCase(categoryName)) {
+            if (category.getName().equalsIgnoreCase(categoryName)) { // may be with equals only
                 return category;
             }
         }
@@ -68,14 +74,21 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
     }
 
     @Override
-    public ShampooImpl createShampoo(String name, String brandName, double price, GenderType genderType,
-                                     int millilitres, UsageType usageType) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public ShampooImpl createShampoo(String name, String brandName,
+                                     double price, GenderType genderType, int millilitres, UsageType usageType) {
+
+        ShampooImpl shampoo = new ShampooImpl(name, brandName, price, genderType, millilitres, usageType);
+        this.products.add(shampoo);
+        return shampoo;
     }
 
     @Override
-    public ToothpasteImpl createToothpaste(String name, String brandName, double price, GenderType genderType, List<String> ingredients) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public ToothpasteImpl createToothpaste(String name, String brandName,
+                                           double price, GenderType genderType, List<String> ingredients) {
+
+        ToothpasteImpl toothpaste = new ToothpasteImpl(name, brandName, price, genderType, ingredients);
+        this.products.add(toothpaste);
+        return toothpaste;
     }
 
     @Override

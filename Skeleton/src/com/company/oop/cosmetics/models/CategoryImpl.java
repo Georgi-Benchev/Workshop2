@@ -27,7 +27,7 @@ public class CategoryImpl implements Category {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public List<Product> getProducts() {
