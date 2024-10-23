@@ -30,7 +30,6 @@ public class CreateCategoryCommand implements Command {
         if (repository.categoryExist(categoryName)) {
             throw new IllegalArgumentException(String.format(CATEGORY_ALREADY_EXISTS, categoryName));
         }
-
         repository.createCategory(categoryName);
 
         return String.format(CATEGORY_CREATED, categoryName);

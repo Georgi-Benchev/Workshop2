@@ -1,9 +1,8 @@
-/*
 package com.company.oop.cosmetics.tests.models;
 
 import com.company.oop.cosmetics.core.contracts.CosmeticsRepository;
+
 import com.company.oop.cosmetics.models.CreamImpl;
-import com.company.oop.cosmetics.models.contracts.Cream;
 import com.company.oop.cosmetics.models.enums.GenderType;
 import com.company.oop.cosmetics.models.enums.ScentType;
 import com.company.oop.cosmetics.tests.utils.TestUtilities;
@@ -81,8 +80,8 @@ public class CreamTests {
                 ScentType.LAVENDER));
     }
 
-    public static Cream addInitializedCreamToRepository(CosmeticsRepository repository) {
-        Cream testCream = initializeTestCream();
+    public static CreamImpl addInitializedCreamToRepository(CosmeticsRepository repository) {
+        CreamImpl testCream = initializeTestCream();
         repository.createCream(
                 testCream.getName(),
                 testCream.getBrandName(),
@@ -92,7 +91,7 @@ public class CreamTests {
         return testCream;
     }
 
-    public static Cream initializeTestCream() {
+    public static CreamImpl initializeTestCream() {
         return new CreamImpl(
                 VALID_CREAM_NAME,
                 VALID_CREAM_BRAND_NAME,
@@ -101,4 +100,3 @@ public class CreamTests {
                 ScentType.LAVENDER);
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.company.oop.cosmetics.tests.commands;
 
 import com.company.oop.cosmetics.commands.CreateCreamCommand;
@@ -130,4 +129,3 @@ public class CreateCreamCommandTests {
         );
     }
 }
-*/

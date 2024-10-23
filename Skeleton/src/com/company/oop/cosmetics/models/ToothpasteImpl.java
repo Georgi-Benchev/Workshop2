@@ -6,7 +6,7 @@ import com.company.oop.cosmetics.models.enums.GenderType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToothpasteImpl extends Product implements Toothpaste {
+public class ToothpasteImpl extends ProductImpl implements Toothpaste {
 
 
     private final List<String> ingredients;
@@ -21,7 +21,7 @@ public class ToothpasteImpl extends Product implements Toothpaste {
 
     @Override
     public String print() {
-        String output = String.format("#%s %s\n #Price: %.2f\n #Gender: %s\n #Ingredients: %s\n ==="
+        String output = String.format("#%s %s\n #Price: $%.2f\n #Gender: %s\n #Ingredients: %s\n"
                 , getName(), getBrandName(), getPrice(), getGenderType(), this.ingredients.toString());
 
         return output;

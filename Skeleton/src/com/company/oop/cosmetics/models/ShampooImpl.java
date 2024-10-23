@@ -3,10 +3,10 @@ package com.company.oop.cosmetics.models;
 import com.company.oop.cosmetics.models.contracts.Shampoo;
 import com.company.oop.cosmetics.models.enums.GenderType;
 import com.company.oop.cosmetics.models.enums.UsageType;
+import com.company.oop.cosmetics.utils.ValidationHelpers;
 
 
-
-public class ShampooImpl extends Product implements Shampoo {
+public class ShampooImpl extends ProductImpl implements Shampoo {
 
     private final int milliliters;
     private final UsageType usageType;
@@ -15,17 +15,12 @@ public class ShampooImpl extends Product implements Shampoo {
     public ShampooImpl(String name, String brand, double price, GenderType genderType, int milliliters, UsageType usageType) {
         super(name, brand, price, genderType);
 
+        ValidationHelpers.validateNotNegative(milliliters, "Milliliters");
         this.milliliters = milliliters;
         this.usageType = usageType;
-
-
     }
 
 
-
-    /*
-         This method should be uncommented when you are done with the class.
-    */
 
     @Override
     public boolean equals(Object o) {
@@ -53,7 +48,7 @@ public class ShampooImpl extends Product implements Shampoo {
 
     @Override
     public String print() {
-        String output = String.format("#%s %s\n #Price: %.2f\n #Gender: %s\n #Milliliter %d\n #Usage %s\n ==="
+        String output = String.format("#%s %s\n #Price: $%.2f\n #Gender: %s\n #Milliliters: %d\n #Usage: %s\n"
                 , getName(), getBrandName(), getPrice(), getGenderType(), this.milliliters, this.usageType);
 
         return output;

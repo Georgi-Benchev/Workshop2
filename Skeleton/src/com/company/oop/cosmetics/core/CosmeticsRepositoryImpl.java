@@ -1,14 +1,12 @@
 package com.company.oop.cosmetics.core;
 
 import com.company.oop.cosmetics.core.contracts.CosmeticsRepository;
-import com.company.oop.cosmetics.models.CategoryImpl;
-import com.company.oop.cosmetics.models.ShampooImpl;
-import com.company.oop.cosmetics.models.ShoppingCartImpl;
-import com.company.oop.cosmetics.models.ToothpasteImpl;
+import com.company.oop.cosmetics.models.*;
 import com.company.oop.cosmetics.models.contracts.Category;
 import com.company.oop.cosmetics.models.contracts.Product;
 import com.company.oop.cosmetics.models.contracts.ShoppingCart;
 import com.company.oop.cosmetics.models.enums.GenderType;
+import com.company.oop.cosmetics.models.enums.ScentType;
 import com.company.oop.cosmetics.models.enums.UsageType;
 
 import java.util.ArrayList;
@@ -48,7 +46,7 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
     public Product findProductByName(String productName) {
 
         for (Product product : products) {
-            if (product.getName().equalsIgnoreCase(productName)) {  // may be with equals only
+            if (product.getName().equals(productName)) {  // may be with equals only
                 return product;
             }
         }
@@ -58,7 +56,7 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
     @Override
     public CategoryImpl findCategoryByName(String categoryName) {
         for (CategoryImpl category : getCategories()) {
-            if (category.getName().equalsIgnoreCase(categoryName)) { // may be with equals only
+            if (category.getName().equals(categoryName)) { // may be with equals only instead of EqualsIgnoreCase
                 return category;
             }
         }
@@ -83,6 +81,14 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
     }
 
     @Override
+    public CreamImpl createCream(String name, String brandName, double price, GenderType genderType, ScentType scentType) {
+
+        CreamImpl cream = new CreamImpl(name, brandName, price, genderType, scentType);
+        this.products.add(cream);
+        return cream;
+    }
+
+    @Override
     public ToothpasteImpl createToothpaste(String name, String brandName,
                                            double price, GenderType genderType, List<String> ingredients) {
 
@@ -96,7 +102,7 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
         boolean exists = false;
 
         for (Category category : getCategories()) {
-            if (category.getName().equalsIgnoreCase(categoryName)) {
+            if (category.getName().equalsIgnoreCase(categoryName)) { // may be with equals only
                 exists = true;
                 break;
             }
@@ -126,7 +132,9 @@ public class CosmeticsRepositoryImpl implements CosmeticsRepository {
 
     @Override
     public void removeProductFromCart(Product product) {
+
         shoppingCart.removeProduct(product);
+
     }
 
 }
