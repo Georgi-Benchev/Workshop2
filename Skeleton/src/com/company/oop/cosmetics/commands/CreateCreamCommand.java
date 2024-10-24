@@ -15,11 +15,8 @@ public class CreateCreamCommand implements Command {
 
 
     private static final String CREAM_CREATED = "Cream with name %s was created!";
+    private static final String PRODUCT_NAME_ALREADY_EXISTS = "Cream with name %s already exists!";
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
-    private static final int NAME_MIN_LENGTH = 3;
-    private static final int NAME_MAX_LENGTH = 15;
-    private static final int BRAND_NAME_MIN_LENGTH = 3;
-    private static final int BRAND_NAME_MAX_LENGTH = 15;
 
     private final CosmeticsRepository cosmeticsRepository;
 
@@ -29,13 +26,11 @@ public class CreateCreamCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        ValidationHelpers.validateIntRange(NAME_MIN_LENGTH, NAME_MAX_LENGTH, parameters.get(0).length(), "Name");
-        ValidationHelpers.validateIntRange(BRAND_NAME_MIN_LENGTH, BRAND_NAME_MAX_LENGTH, parameters.get(1).length(), "Brand");
+
         String name = parameters.get(0);
         String brand = parameters.get(1);
-        Double price = tryParseDouble(parameters.get(2), INVALID_PRICE);
+        double price = tryParseDouble(parameters.get(2), INVALID_PRICE);
         GenderType genderType = tryParseGender(parameters.get(3));
         ScentType scent = tryParseScent(parameters.get(4));
 
@@ -44,8 +39,11 @@ public class CreateCreamCommand implements Command {
 
     }
 
-    private String createCream(String name, String brand, Double price, GenderType genderType, ScentType scent) {
+    private String createCream(String name, String brand, double price, GenderType genderType, ScentType scent) {
 
+        if (cosmeticsRepository.productExist(name)){
+            throw new IllegalArgumentException(String.format(PRODUCT_NAME_ALREADY_EXISTS, name));
+        }
         this.cosmeticsRepository.createCream(name, brand, price, genderType, scent);
 
         return String.format(CREAM_CREATED, name);

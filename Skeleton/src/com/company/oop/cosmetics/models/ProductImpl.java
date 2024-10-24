@@ -43,7 +43,10 @@ public abstract class ProductImpl implements Product {
 
     @Override
     public String getName() {
-        return this.name;
+        if (!name.isEmpty()) {
+            return this.name;
+        }
+        throw new IllegalArgumentException("Name is empty");
     }
 
     @Override

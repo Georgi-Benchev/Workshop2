@@ -21,8 +21,16 @@ public class ToothpasteImpl extends ProductImpl implements Toothpaste {
 
     @Override
     public String print() {
+        StringBuilder ingredients = new StringBuilder("[");
+        for (String ingredient : this.ingredients) {
+            ingredients.append(ingredient).append(", ");
+        }
+        ingredients.deleteCharAt(ingredients.length() - 1);
+        ingredients.deleteCharAt(ingredients.length() - 1);
+        ingredients.append("]");
+
         String output = String.format("#%s %s\n #Price: $%.2f\n #Gender: %s\n #Ingredients: %s\n"
-                , getName(), getBrandName(), getPrice(), getGenderType(), this.ingredients.toString());
+                , getName(), getBrandName(), getPrice(), getGenderType(), ingredients);
 
         return output;
     }

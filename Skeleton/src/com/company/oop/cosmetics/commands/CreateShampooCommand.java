@@ -13,12 +13,9 @@ import static com.company.oop.cosmetics.utils.ParsingHelpers.*;
 public class CreateShampooCommand implements Command {
 
     private static final String SHAMPOO_CREATED = "Shampoo with name %s was created!";
-
+    private static final String PRODUCT_NAME_ALREADY_EXISTS = "Shampoo with name %s already exists!";
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
-    private static final int NAME_MIN_LENGTH = 3;
-    private static final int NAME_MAX_LENGTH = 10;
-    private static final int BRAND_NAME_MIN_LENGTH = 2;
-    private static final int BRAND_NAME_MAX_LENGTH = 10;
+
 
     private final CosmeticsRepository cosmeticsRepository;
 
@@ -30,8 +27,6 @@ public class CreateShampooCommand implements Command {
     public String execute(List<String> parameters) {
 
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        ValidationHelpers.validateIntRange(NAME_MIN_LENGTH, NAME_MAX_LENGTH, parameters.get(0).length(), "Name");
-        ValidationHelpers.validateIntRange(BRAND_NAME_MIN_LENGTH, BRAND_NAME_MAX_LENGTH, parameters.get(1).length(), "Brand");
 
         String name = parameters.get(0);
         String brand = parameters.get(1);
@@ -47,6 +42,9 @@ public class CreateShampooCommand implements Command {
     private String createShampoo(String name, String brand, Double price,
                                  GenderType genderType, int milliliters, UsageType usageType) {
 
+        if (cosmeticsRepository.productExist(name)){
+            throw new IllegalArgumentException(String.format(PRODUCT_NAME_ALREADY_EXISTS, name));
+        }
         cosmeticsRepository.createShampoo(name, brand, price, genderType, milliliters, usageType);
 
         return String.format(SHAMPOO_CREATED, name);

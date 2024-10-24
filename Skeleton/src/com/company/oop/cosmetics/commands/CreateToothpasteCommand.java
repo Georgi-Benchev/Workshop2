@@ -15,11 +15,9 @@ import static com.company.oop.cosmetics.utils.ParsingHelpers.*;
 public class CreateToothpasteCommand implements Command {
 
     private static final String TOOTHPASTE_CREATED = "Toothpaste with name %s was created!";
+    private static final String PRODUCT_NAME_ALREADY_EXISTS = "Toothpaste with name %s already exists!";
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
-    private static final int NAME_MIN_LENGTH = 3;
-    private static final int NAME_MAX_LENGTH = 10;
-    private static final int BRAND_NAME_MIN_LENGTH = 2;
-    private static final int BRAND_NAME_MAX_LENGTH = 10;
+
 
     private final CosmeticsRepository cosmeticsRepository;
 
@@ -32,8 +30,6 @@ public class CreateToothpasteCommand implements Command {
     public String execute(List<String> parameters) {
 
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        ValidationHelpers.validateIntRange(NAME_MIN_LENGTH, NAME_MAX_LENGTH, parameters.get(0).length(), "Name");
-        ValidationHelpers.validateIntRange(BRAND_NAME_MIN_LENGTH, BRAND_NAME_MAX_LENGTH, parameters.get(1).length(), "Brand");
 
         String name = parameters.get(0);
         String brand = parameters.get(1);
@@ -49,6 +45,10 @@ public class CreateToothpasteCommand implements Command {
 
     private String createToothpaste(String name, String brand, Double price,GenderType genderType, List<String> ingredients) {
 
+
+        if (cosmeticsRepository.productExist(name)){
+            throw new IllegalArgumentException(String.format(PRODUCT_NAME_ALREADY_EXISTS, name));
+        }
         cosmeticsRepository.createToothpaste(name, brand, price, genderType, ingredients);
 
         return String.format(TOOTHPASTE_CREATED, name);
